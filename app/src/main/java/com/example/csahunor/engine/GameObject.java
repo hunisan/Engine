@@ -18,14 +18,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class GameObject {
-    Bitmap image;
+    String image;
     float x,y;
     int w,h;
 
 
-    void draw()
+    void draw(Canvas canvas, Paint p)
     {
-
+        canvas.drawBitmap(Cat.images.get(image),(int)x,(int)y,p);
     }
 
     void update()
