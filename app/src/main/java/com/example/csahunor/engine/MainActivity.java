@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void draw() {
-            currentState.draw();
+            currentState.draw(canvas,paint);
         }
         public void pause()
         {
