@@ -22,11 +22,10 @@ import java.util.*;
 public class Cat {
     public static Map<String, Bitmap> images = new HashMap<>();
 
-    public static String[] image_list = {};
 
     public static void load(Context context)
     {
-        for(String s : image_list)
+        for(String s : Owl.image_list)
         {
             int id =context.getResources().getIdentifier(s,"drawable",context.getPackageName());
 

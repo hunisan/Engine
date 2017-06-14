@@ -31,11 +31,15 @@ public class GameState {
     void update()
     {
         for(GameObject o : objects){
-            o.update();
+            o.update(this);
         }
     }
-    void onTap()
+    void tap(MotionEvent e)
     {
+        int tapX = (int)e.getX();
+        int tapY = (int)e.getY();
+
+
 
     }
 }

@@ -13,6 +13,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.support.v4.view.GestureDetectorCompat;
+
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,16 +24,47 @@ public class MainActivity extends AppCompatActivity {
 
     GameState currentState;
 
+    private GestureDetectorCompat mDetector;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         gameView = new GameView(this);
+        mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+
         setContentView(gameView);
 
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.mDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 
-    // GameView class w ill go here
+    class MyGestureListener extends SimpleOnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+
+            return true;
+        }
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            gameView.onTap(event);
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+
+            return true;
+        }
+    }
+    // GameView class will go here
 
     class GameView extends SurfaceView implements Runnable {
         Thread gameThread = null;
@@ -89,11 +124,14 @@ public class MainActivity extends AppCompatActivity {
             gameThread.start();
         }
 
-        @Override
-        public boolean onTouchEvent(MotionEvent motionEvent)
+        public void onTap(MotionEvent event)
         {
-            return true;
+            currentState.tap(event);
         }
+
+
+
+
 
     }
     // More SimpleGameEngine methods will go here

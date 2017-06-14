@@ -28,7 +28,7 @@ public class GameObject {
         canvas.drawBitmap(Cat.images.get(image),(int)x,(int)y,p);
     }
 
-    void update()
+    void update(GameState state)
     {
 
     }

@@ -5,6 +5,8 @@ package com.example.csahunor.engine;
  */
 
 public class Owl {
+
+    public static String[] image_list = {};
     public static String title = "Game Name";
 
     public static int screen_width = 0;
