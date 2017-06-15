@@ -6,4 +6,7 @@ package com.example.csahunor.engine;
 
 public class Menu extends GameState {
 
+    public Menu() {
+
+    }
 }

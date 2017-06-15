@@ -17,12 +17,16 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameState {
 
-    GameObject[] objects;
+    List<GameObject> objects = new ArrayList<GameObject>();
+
     void draw(Canvas c, Paint p)
     {
+
         for(GameObject o : objects){
             o.draw(c,p);
         }
@@ -39,7 +43,13 @@ public class GameState {
         int tapX = (int)e.getX();
         int tapY = (int)e.getY();
 
+        for(GameObject o : objects)
+            if(o.contains(tapX,tapY))
+                o.onTap(tapX,tapY,this);
 
-
+    }
+    void add(GameObject newObject)
+    {
+        objects.add(newObject);
     }
 }

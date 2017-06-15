@@ -1,5 +1,6 @@
 package com.example.csahunor.engine;
 
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
@@ -17,6 +18,8 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.support.v4.view.GestureDetectorCompat;
 
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,10 +80,25 @@ public class MainActivity extends AppCompatActivity {
 
         public GameView(Context context) {
             super(context);
+
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
             ourHolder = getHolder();
             paint = new Paint();
 
+            Cat.load(context);
+
+            //Get screen dimensions
+            Point size = new Point();
+            getWindowManager().getDefaultDisplay().getSize(size);
+            Owl.screen_width=size.x;
+            Owl.screen_height=size.y;
+
             currentState = new Menu();
+            currentState.objects.add(new TextObject(Owl.title,0,0,50));
+            //currentState.objects.add(new GameObject("mega",0,0,Owl.screen_width,Owl.screen_width));
         }
 
         @Override
@@ -104,7 +122,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void draw() {
-            currentState.draw(canvas,paint);
+
+            if (ourHolder.getSurface().isValid()) {
+                canvas = ourHolder.lockCanvas();
+
+                canvas.drawColor(Color.argb(255,  26, 128, 182));
+
+                currentState.draw(canvas,paint);
+
+                ourHolder.unlockCanvasAndPost(canvas);
+            }
         }
         public void pause()
         {
